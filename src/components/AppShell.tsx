@@ -20,6 +20,36 @@ export const menu = [
 
 const groups = ["Overview", "Growth", "Operations", "Collaborate"];
 
+function BackgroundArt() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      <svg className="absolute -right-32 -top-32 size-[480px] text-primary/10" viewBox="0 0 200 200" fill="currentColor">
+        <path d="M42.7,-62.9C55.9,-52.8,67.6,-40.3,72.6,-25.4C77.6,-10.5,75.9,6.8,70.3,22.1C64.7,37.4,55.2,50.7,42.5,59.4C29.8,68.1,14.9,72.2,-0.7,73.2C-16.3,74.2,-32.6,72.1,-45.6,63.4C-58.6,54.7,-68.3,39.4,-72.5,22.7C-76.7,6,-75.4,-12.1,-68.3,-27.2C-61.2,-42.3,-48.3,-54.4,-34,-63.9C-19.7,-73.4,-3.9,-80.3,10.3,-78.3C24.5,-76.3,29.5,-73,42.7,-62.9Z" transform="translate(100 100)" />
+      </svg>
+      <svg className="absolute -bottom-40 -left-24 size-[420px] text-primary/[0.07]" viewBox="0 0 200 200" fill="currentColor">
+        <path d="M39.5,-54.4C52.4,-46.7,64.6,-35.6,70.4,-21.7C76.2,-7.8,75.6,8.9,69.8,23.3C64,37.7,53,49.8,39.9,58.2C26.8,66.6,11.6,71.3,-3.4,75.9C-18.4,80.5,-33.2,85,-45.4,78.6C-57.6,72.2,-67.2,54.9,-72.3,37.2C-77.4,19.5,-78,1.4,-73.1,-13.6C-68.2,-28.6,-57.8,-40.5,-45.1,-48.4C-32.4,-56.3,-17.4,-60.2,-1.8,-58C13.8,-55.8,26.6,-62.1,39.5,-54.4Z" transform="translate(100 100)" />
+      </svg>
+      <svg className="absolute right-24 top-40 size-40 text-primary/15" viewBox="0 0 100 100" fill="currentColor">
+        {Array.from({ length: 25 }).map((_, i) => (
+          <circle key={i} cx={(i % 5) * 20 + 10} cy={Math.floor(i / 5) * 20 + 10} r="2.2" />
+        ))}
+      </svg>
+      <svg className="absolute bottom-24 left-1/3 size-28 text-primary/10" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="50" cy="50" r="38" />
+        <circle cx="50" cy="50" r="24" strokeDasharray="4 6" />
+      </svg>
+      <svg className="absolute left-10 top-24 h-24 w-64 text-primary/10" viewBox="0 0 256 96" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+        <path d="M4 60 C 40 20, 70 90, 106 50 S 176 10, 212 55 S 250 70, 252 40" />
+        <path d="M4 78 C 40 38, 70 108, 106 68 S 176 28, 212 73 S 250 88, 252 58" opacity="0.5" />
+      </svg>
+      <svg className="absolute bottom-10 right-16 size-24 text-primary/15" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+        <path d="M20 70 L50 40 L80 70" />
+        <path d="M20 50 L50 20 L80 50" opacity="0.5" />
+      </svg>
+    </div>
+  );
+}
+
 export function AppShell({ title, children }: { title: string; children: ReactNode }) {
   const [open, setOpen] = useState(true);
   const path = useRouterState({ select: (s) => s.location.pathname });
@@ -66,8 +96,9 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
         )}
       </aside>
 
-      <div className="flex flex-1 flex-col min-w-0">
-        <header className="sticky top-0 z-10 flex h-16 items-center gap-3 border-b bg-card/80 px-6 backdrop-blur">
+      <div className="relative flex flex-1 flex-col min-w-0">
+        <BackgroundArt />
+        <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b bg-card/80 px-6 backdrop-blur">
           <button onClick={() => setOpen(!open)} className="rounded-lg p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" aria-label="Toggle menu">
             <PanelLeft className="size-[18px]" />
           </button>
@@ -92,7 +123,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             </div>
           </div>
         </header>
-        <main className="flex-1 p-6 lg:p-8">
+        <main className="relative z-10 flex-1 p-6 lg:p-8">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-xs font-medium text-muted-foreground">Home / {title}</p>

@@ -5,7 +5,7 @@ import {
   Search, Bell, PanelLeft, Plus, TrendingUp, ChevronRight, HelpCircle, Sparkles, MoreHorizontal,
   BarChart3, Activity, CircleDot,
 } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 export const menu = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard, group: "Overview" },
@@ -262,6 +262,80 @@ export function ModulePage({ title, stats, panels }: { title: string; stats: [st
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
         {panels.map((p) => <Panel key={p.title} {...p} />)}
       </div>
+
+      <div className="mt-6 grid gap-4 xl:grid-cols-3">
+        <div className="fade-up rounded-2xl border bg-card p-5 shadow-card">
+          <p className="font-bold">Distribution</p>
+          <p className="text-xs text-muted-foreground">Share by category</p>
+          <div className="relative mt-2 h-52">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={donut} dataKey="v" innerRadius={58} outerRadius={82} paddingAngle={3} stroke="none">
+                  {donut.map((d) => <Cell key={d.n} fill={d.c} />)}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
+              <div><p className="text-2xl font-extrabold">100%</p><p className="text-xs text-muted-foreground">Total</p></div>
+            </div>
+          </div>
+          <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
+            {donut.map((d) => (
+              <span key={d.n} className="flex items-center gap-2"><span className="size-2.5 rounded-full" style={{ background: d.c }} />{d.n} · {d.v}%</span>
+            ))}
+          </div>
+        </div>
+
+        <div className="fade-up rounded-2xl border bg-card p-5 shadow-card">
+          <p className="font-bold">Recent activity</p>
+          <p className="text-xs text-muted-foreground">Live updates from your team</p>
+          <ol className="relative mt-4 space-y-4 border-l pl-5">
+            {activity.map((a) => (
+              <li key={a.t} className="relative">
+                <span className="absolute -left-[27px] top-1 grid size-3.5 place-items-center rounded-full bg-primary ring-4 ring-accent" />
+                <p className="text-sm font-medium">{a.t}</p>
+                <p className="text-xs text-muted-foreground">{a.w}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="fade-up rounded-2xl border bg-card p-5 shadow-card">
+          <p className="font-bold">Quick actions</p>
+          <p className="text-xs text-muted-foreground">Shortcuts for {title}</p>
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            {quick.map((q) => (
+              <button key={q.l} className="group flex flex-col items-start gap-2 rounded-xl border bg-background p-3 text-left transition hover:-translate-y-0.5 hover:border-primary hover:shadow-glow">
+                <span className="grid size-9 place-items-center rounded-lg bg-accent text-accent-foreground transition group-hover:bg-primary-gradient group-hover:text-primary-foreground"><q.i className="size-4" /></span>
+                <span className="text-sm font-semibold">{q.l}</span>
+              </button>
+            ))}
+          </div>
+          <div className="mt-4 rounded-xl bg-accent p-3">
+            <p className="text-xs font-semibold text-accent-foreground">Upcoming</p>
+            <p className="mt-1 text-sm font-medium">Parent-teacher meeting · Nov 5, 10:00 AM</p>
+          </div>
+        </div>
+      </div>
     </AppShell>
   );
 }
+
+const donut = [
+  { n: "Primary", v: 42, c: "var(--primary)" },
+  { n: "Secondary", v: 28, c: "var(--chart-2)" },
+  { n: "Higher", v: 18, c: "var(--chart-4)" },
+  { n: "Other", v: 12, c: "var(--chart-1)" },
+];
+const activity = [
+  { t: "Fee payment received from Grade 8", w: "2 min ago · Finance" },
+  { t: "New admission enquiry submitted", w: "18 min ago · Admission" },
+  { t: "Exam timetable published", w: "1 hr ago · Academic" },
+  { t: "Leave approved for Arjun Iyer", w: "3 hrs ago · HR" },
+];
+const quick = [
+  { l: "Add student", i: UserPlus },
+  { l: "Collect fee", i: Wallet },
+  { l: "Send notice", i: Megaphone },
+  { l: "Reports", i: BarChart3 },
+];

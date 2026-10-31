@@ -98,7 +98,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
 
       <div className="relative flex flex-1 flex-col min-w-0">
         <BackgroundArt />
-        <header className="sticky top-0 z-10 flex h-16 items-center gap-3 border-b bg-card/80 px-6 backdrop-blur">
+        <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b bg-card/80 px-6 backdrop-blur">
           <button onClick={() => setOpen(!open)} className="rounded-lg p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" aria-label="Toggle menu">
             <PanelLeft className="size-[18px]" />
           </button>
@@ -123,7 +123,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             </div>
           </div>
         </header>
-        <main className="flex-1 p-6 lg:p-8">
+        <main className="relative z-10 flex-1 p-6 lg:p-8">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-xs font-medium text-muted-foreground">Home / {title}</p>

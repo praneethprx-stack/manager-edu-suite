@@ -168,7 +168,7 @@ function chartData(seed: string) {
   let h = 0;
   for (const c of seed) h = (h * 31 + c.charCodeAt(0)) % 997;
   return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"].map((m, i) => ({
-    m, a: 40 + ((h * (i + 3)) % 50) + i * 4, b: 25 + ((h * (i + 7)) % 30) + i * 2,
+    m, a: Math.round(55 + Math.sin(i * 0.9 + h) * 14 + i * 4), b: Math.round(40 + Math.cos(i * 0.8 + h) * 10 + i * 2),
   }));
 }
 

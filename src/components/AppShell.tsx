@@ -96,7 +96,8 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
         )}
       </aside>
 
-      <div className="flex flex-1 flex-col min-w-0">
+      <div className="relative flex flex-1 flex-col min-w-0">
+        <BackgroundArt />
         <header className="sticky top-0 z-10 flex h-16 items-center gap-3 border-b bg-card/80 px-6 backdrop-blur">
           <button onClick={() => setOpen(!open)} className="rounded-lg p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" aria-label="Toggle menu">
             <PanelLeft className="size-[18px]" />

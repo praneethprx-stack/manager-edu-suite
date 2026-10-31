@@ -61,7 +61,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
   );
 }
 
-export function Stat({ label, value, note }: { label: string; value: string; note?: string }) {
+export function Stat({ label, value, note }: { label: string; value: string; note?: string | undefined }) {
   return (
     <div className="rounded-lg border bg-card p-5">
       <p className="text-sm text-muted-foreground">{label}</p>

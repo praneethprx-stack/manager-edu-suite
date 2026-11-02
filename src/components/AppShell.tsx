@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   LayoutDashboard, Megaphone, UserPlus, Wallet, GraduationCap, Users, Briefcase, Settings,
   Search, Bell, PanelLeft, Plus, TrendingUp, ChevronRight, HelpCircle, Sparkles, MoreHorizontal,

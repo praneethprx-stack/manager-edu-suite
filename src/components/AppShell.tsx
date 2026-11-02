@@ -3,19 +3,21 @@ import { useState, type ReactNode } from "react";
 import {
   LayoutDashboard, Megaphone, UserPlus, Wallet, GraduationCap, Users, Briefcase, Settings,
   Search, Bell, PanelLeft, Plus, TrendingUp, ChevronRight, HelpCircle, Sparkles, MoreHorizontal,
-  BarChart3, Activity, CircleDot,
+  BarChart3, Activity, CircleDot, ShieldCheck, Landmark,
 } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 export const menu = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard, group: "Overview" },
-  { title: "Marketing", url: "/marketing", icon: Megaphone, group: "Growth" },
-  { title: "Admission", url: "/admission", icon: UserPlus, group: "Growth" },
-  { title: "Finance", url: "/finance", icon: Wallet, group: "Operations" },
-  { title: "Academic", url: "/academic", icon: GraduationCap, group: "Operations" },
-  { title: "HR", url: "/hr", icon: Users, group: "Operations" },
-  { title: "Workspace", url: "/workspace", icon: Briefcase, group: "Collaborate" },
-  { title: "Settings", url: "/settings", icon: Settings, group: "Collaborate" },
+  { title: "Dashboard", url: "/", icon: LayoutDashboard },
+  { title: "Marketing", url: "/marketing", icon: Megaphone },
+  { title: "Admission", url: "/admission", icon: UserPlus },
+  { title: "Finance", url: "/finance", icon: Wallet },
+  { title: "Admin", url: "/admin", icon: ShieldCheck },
+  { title: "Academic", url: "/academic", icon: GraduationCap },
+  { title: "HR", url: "/hr", icon: Users },
+  { title: "Directors", url: "/directors", icon: Landmark },
+  { title: "Workspace", url: "/workspace", icon: Briefcase },
+  { title: "Settings", url: "/settings", icon: Settings },
 ] as const;
 
 

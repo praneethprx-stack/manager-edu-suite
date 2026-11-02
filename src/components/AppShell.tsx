@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   LayoutDashboard, Megaphone, UserPlus, Wallet, GraduationCap, Users, Briefcase, Settings,
   Search, Bell, PanelLeft, Plus, TrendingUp, ChevronRight, HelpCircle, Sparkles, MoreHorizontal,
@@ -119,15 +119,15 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             </div>
           </div>
         </header>
-        <main className="relative z-10 flex-1 p-6 lg:p-8">
+        <main key={title} className="page-in relative z-10 flex-1 p-6 lg:p-8">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-xs font-medium text-muted-foreground">Home / {title}</p>
-              <h1 className="mt-1 text-2xl font-extrabold tracking-tight">{title}</h1>
+              <h1 className="text-gradient mt-1 text-2xl font-extrabold tracking-tight">{title}</h1>
             </div>
             <div className="flex gap-2">
               <button className="rounded-lg border bg-card px-4 py-2 text-sm font-semibold hover:bg-accent">Export</button>
-              <button className="flex items-center gap-1.5 rounded-lg bg-primary-gradient px-4 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95">
+              <button className="shine flex items-center gap-1.5 rounded-lg bg-primary-gradient px-4 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95">
                 <Plus className="size-4" />Create new
               </button>
             </div>
@@ -144,12 +144,12 @@ const statIcons = [Users, TrendingUp, BarChart3, Activity];
 export function Stat({ label, value, note, i }: { label: string; value: string; note?: string | undefined; i: number }) {
   const Icon = statIcons[i % 4]!;
   return (
-    <div className="fade-up rounded-2xl border bg-card p-5 shadow-card transition hover:-translate-y-0.5" style={{ animationDelay: `${i * 60}ms` }}>
+    <div className="fade-up card-fx group relative overflow-hidden rounded-2xl border bg-card p-5 shadow-card" style={{ animationDelay: `${i * 90}ms` }}>
       <div className="flex items-start justify-between">
         <p className="text-sm font-medium text-muted-foreground">{label}</p>
-        <div className="grid size-10 place-items-center rounded-xl bg-accent text-accent-foreground"><Icon className="size-5" /></div>
+        <div className="grid size-10 place-items-center rounded-xl bg-accent text-accent-foreground transition duration-500 group-hover:rotate-[-8deg] group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground"><Icon className="size-5" /></div>
       </div>
-      <p className="mt-2 text-3xl font-extrabold tracking-tight">{value}</p>
+      <p className="mt-2 text-3xl font-extrabold tracking-tight"><CountUp value={value} /></p>
       <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-success/10 px-2 py-0.5 text-xs font-semibold text-success">
         <TrendingUp className="size-3" />{note ?? "Stable"}
       </p>
@@ -166,7 +166,7 @@ function statusTone(v: string) {
 
 export function Panel({ title, rows }: { title: string; rows: [string, string][] }) {
   return (
-    <div className="fade-up rounded-2xl border bg-card shadow-card">
+    <div className="fade-up card-fx rounded-2xl border bg-card shadow-card" style={{ animationDelay: "250ms" }}>
       <div className="flex items-center justify-between px-5 py-4">
         <p className="font-bold">{title}</p>
         <button className="rounded-md p-1 text-muted-foreground hover:bg-accent" aria-label="More"><MoreHorizontal className="size-4" /></button>
@@ -175,7 +175,7 @@ export function Panel({ title, rows }: { title: string; rows: [string, string][]
         {rows.map(([a, b]) => {
           const tone = statusTone(b);
           return (
-            <li key={a} className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm transition hover:bg-accent/60">
+            <li key={a} className="row-fx flex items-center gap-3 rounded-xl px-3 py-3 text-sm">
               <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-accent text-xs font-bold text-accent-foreground">{a.charAt(0)}</div>
               <span className="flex-1 font-medium">{a}</span>
               {tone ? (
@@ -208,7 +208,7 @@ export function ModulePage({ title, stats, panels }: { title: string; stats: [st
       </div>
 
       <div className="mt-6 grid gap-4 xl:grid-cols-3">
-        <div className="fade-up rounded-2xl border bg-card p-5 shadow-card xl:col-span-2">
+        <div className="fade-up card-fx rounded-2xl border bg-card p-5 shadow-card xl:col-span-2" style={{ animationDelay: "200ms" }}>
           <div className="flex items-center justify-between">
             <div>
               <p className="font-bold">{title} performance</p>
@@ -233,7 +233,7 @@ export function ModulePage({ title, stats, panels }: { title: string; stats: [st
                 <YAxis tickLine={false} axisLine={false} fontSize={12} stroke="var(--muted-foreground)" />
                 <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", background: "var(--card)" }} />
                 <Area type="monotone" dataKey="b" stroke="var(--chart-2)" strokeWidth={2} fill="transparent" strokeDasharray="4 4" />
-                <Area type="monotone" dataKey="a" stroke="var(--primary)" strokeWidth={2.5} fill="url(#ga)" />
+                <Area animationDuration={1400} type="monotone" dataKey="a" stroke="var(--primary)" strokeWidth={2.5} fill="url(#ga)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -335,3 +335,18 @@ const quick = [
   { l: "Send notice", i: Megaphone },
   { l: "Reports", i: BarChart3 },
 ];
+
+function CountUp({ value }: { value: string }) {
+  const m = value.match(/^([^\d]*)([\d,.]+)(.*)$/);
+  const [n, setN] = useState(0);
+  const target = m ? parseFloat(m[2]!.replace(/,/g, "")) : 0;
+  useEffect(() => {
+    if (!m) return;
+    let raf = 0; const t0 = performance.now();
+    const step = (t: number) => { const p = Math.min(1, (t - t0) / 1200); setN(target * (1 - Math.pow(1 - p, 3))); if (p < 1) raf = requestAnimationFrame(step); };
+    raf = requestAnimationFrame(step); return () => cancelAnimationFrame(raf);
+  }, [value]);
+  if (!m) return <>{value}</>;
+  const dec = (m[2]!.split(".")[1] || "").length;
+  return <>{m[1]}{n.toLocaleString("en-IN", { minimumFractionDigits: dec, maximumFractionDigits: dec })}{m[3]}</>;
+}

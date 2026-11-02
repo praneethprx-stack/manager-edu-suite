@@ -68,24 +68,19 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
           )}
         </div>
         <nav className="flex-1 overflow-y-auto px-3 py-2">
-          {groups.map((g) => (
-            <div key={g} className="mb-4">
-              {open && <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.14em] opacity-50">{g}</p>}
-              <div className="space-y-1">
-                {menu.filter((m) => m.group === g).map((m) => {
-                  const active = path === m.url;
-                  return (
-                    <Link key={m.url} to={m.url} title={m.title}
-                      className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${active ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-glow" : "hover:bg-sidebar-accent/40 hover:text-sidebar-accent-foreground"}`}>
-                      <m.icon className="size-[18px] shrink-0" />
-                      {open && <span className="flex-1">{m.title}</span>}
-                      {open && active && <ChevronRight className="size-4 opacity-70" />}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
+          <div className="space-y-1">
+            {menu.map((m) => {
+              const active = path === m.url;
+              return (
+                <Link key={m.url} to={m.url} title={m.title}
+                  className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${active ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-glow" : "hover:bg-sidebar-accent/40 hover:text-sidebar-accent-foreground"}`}>
+                  <m.icon className="size-[18px] shrink-0" />
+                  {open && <span className="flex-1">{m.title}</span>}
+                  {open && active && <ChevronRight className="size-4 opacity-70" />}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
         {open && (
           <div className="m-3 rounded-xl bg-sidebar-accent/40 p-4">

@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcademicRouteImport } from './routes/academic'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdmissionRouteImport } from './routes/admission'
+import { Route as DirectorsRouteImport } from './routes/directors'
 import { Route as FinanceRouteImport } from './routes/finance'
 import { Route as HrRouteImport } from './routes/hr'
 import { Route as MarketingRouteImport } from './routes/marketing'
@@ -28,9 +30,19 @@ const AcademicRoute = AcademicRouteImport.update({
   path: '/academic',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdmissionRoute = AdmissionRouteImport.update({
   id: '/admission',
   path: '/admission',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DirectorsRoute = DirectorsRouteImport.update({
+  id: '/directors',
+  path: '/directors',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FinanceRoute = FinanceRouteImport.update({
@@ -62,7 +74,9 @@ const WorkspaceRoute = WorkspaceRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/academic': typeof AcademicRoute
+  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
+  '/directors': typeof DirectorsRoute
   '/finance': typeof FinanceRoute
   '/hr': typeof HrRoute
   '/marketing': typeof MarketingRoute
@@ -72,7 +86,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/academic': typeof AcademicRoute
+  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
+  '/directors': typeof DirectorsRoute
   '/finance': typeof FinanceRoute
   '/hr': typeof HrRoute
   '/marketing': typeof MarketingRoute
@@ -83,7 +99,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/academic': typeof AcademicRoute
+  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
+  '/directors': typeof DirectorsRoute
   '/finance': typeof FinanceRoute
   '/hr': typeof HrRoute
   '/marketing': typeof MarketingRoute
@@ -95,7 +113,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/academic'
+    | '/admin'
     | '/admission'
+    | '/directors'
     | '/finance'
     | '/hr'
     | '/marketing'
@@ -105,7 +125,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/academic'
+    | '/admin'
     | '/admission'
+    | '/directors'
     | '/finance'
     | '/hr'
     | '/marketing'
@@ -115,7 +137,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/academic'
+    | '/admin'
     | '/admission'
+    | '/directors'
     | '/finance'
     | '/hr'
     | '/marketing'
@@ -126,7 +150,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AcademicRoute: typeof AcademicRoute
+  AdminRoute: typeof AdminRoute
   AdmissionRoute: typeof AdmissionRoute
+  DirectorsRoute: typeof DirectorsRoute
   FinanceRoute: typeof FinanceRoute
   HrRoute: typeof HrRoute
   MarketingRoute: typeof MarketingRoute
@@ -150,11 +176,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcademicRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admission': {
       id: '/admission'
       path: '/admission'
       fullPath: '/admission'
       preLoaderRoute: typeof AdmissionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/directors': {
+      id: '/directors'
+      path: '/directors'
+      fullPath: '/directors'
+      preLoaderRoute: typeof DirectorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/finance': {
@@ -198,7 +238,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcademicRoute: AcademicRoute,
+  AdminRoute: AdminRoute,
   AdmissionRoute: AdmissionRoute,
+  DirectorsRoute: DirectorsRoute,
   FinanceRoute: FinanceRoute,
   HrRoute: HrRoute,
   MarketingRoute: MarketingRoute,

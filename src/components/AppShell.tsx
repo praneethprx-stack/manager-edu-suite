@@ -18,7 +18,7 @@ export const menu = [
   { title: "Settings", url: "/settings", icon: Settings, group: "Collaborate" },
 ] as const;
 
-const groups = ["\n", "\n", "\n", "\n"];
+const groups = ["Overview", "Growth", "Operations", "Collaborate"];
 
 function BackgroundArt() {
   return (
